@@ -4,11 +4,11 @@ const BG = "#f8f5ef";
 const ACCENT = "#140605";
 
 // Edit these
-const EMAIL = "your@email.com";
+const EMAIL = "vyshnavuvinay@gmail.com";
 const links = [
-  { label: "GitHub", href: "https://github.com/your-username" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/your-username" },
-  { label: "Instagram", href: "https://instagram.com/your-username" },
+  { label: "GitHub", href: "https://github.com/vyshnav-u" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/vyshnavu-vinay-8b3118424/" },
+  { label: "Instagram", href: "https://instagram.com/vysxhn_v" },
   { label: "Download CV", href: "/cv.pdf", download: true },
 ];
 

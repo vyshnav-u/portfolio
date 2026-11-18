@@ -1,47 +1,94 @@
+
 import React, { useRef, useState } from "react";
 
 const BG = "#f8f5ef";
 const ACCENT = "#140605";
 
-// Dummy image pool. Replace with your real project images.
-const pool = [
-  "https://i.pinimg.com/1200x/c6/2f/ca/c62fca3fc71e6f542066fc414c10d44b.jpg",
-  "https://i.pinimg.com/1200x/39/dc/0b/39dc0bf4a94ba7163c7fc9c72e24dddc.jpg",
-  "https://i.pinimg.com/1200x/9c/90/df/9c90df5147aaa11fd14db0503927fcb4.jpg",
-  "https://i.pinimg.com/736x/66/f5/cf/66f5cf8db0e6e5c9507b07f824f0a3da.jpg",
-  "https://i.pinimg.com/736x/1a/1d/11/1a1d110ce75c5173361396ab8f233a6b.jpg",
-  "https://i.pinimg.com/1200x/a9/d8/22/a9d8221d495073cb899d8c9646c9b005.jpg",
+const projects = [
+  {
+    id: 1,
+    name: "BookStore Page",
+    category: "Web",
+    link: "https://github.com/your-username/bookstore",
+    img: "/projects/BOOKSTORE/BOOSTORE Home.png",
+    gallery: [
+      "/projects/BOOKSTORE/BOOSTORE Home.png",
+      "/projects/BOOKSTORE/BOOKSTORE Footer.png",
+    ],
+  },
+  {
+    id: 2,
+    name: "E-Fit Fitness Training Page",
+    category: "Web",
+    link: "https://github.com/your-username/elysian-landing",
+    img: "/projects/E-FIT/EFIT Home.png",
+    gallery: [
+      "/projects/E-FIT/EFIT Home.png",
+      "/projects/E-FIT/EFIT List.png",
+      "/projects/E-FIT/EFIT Footer.png",
+    ],
+  },
+  {
+    id: 3,
+    name: "Retro Casette Page",
+    category: "Web",
+    link: "https://github.com/your-username/solstice-posters",
+    img: "/projects/RETRO/RETRO Hero.png",
+    gallery: [
+      "/projects/RETRO/RETRO Hero.png",
+      "/projects/RETRO/RETRO About.png",
+     
+    ],
+  },
+  {
+    id: 4,
+    name: "Product Page",
+    category: "App",
+    link: "https://github.com/your-username/nova-app",
+    img: "/projects/PRODUCT PAGE/PRODUCT Home.png",
+    gallery: [
+      "/projects/PRODUCT PAGE/PRODUCT Home.png",
+      "/projects/PRODUCT PAGE/PRODUCT Product.png",
+      "/projects/PRODUCT PAGE/PRODUCT Order.png",
+    ],
+  },
+  {
+    id: 5,
+    name: "Flow Landing Page",
+    category: "Branding",
+    link: "https://github.com/your-username/quantum-social",
+    img: "/projects/FLOW/FLOW Home.png",
+    gallery: [
+      "/projects/FLOW/FLOW Home.png",
+      "/projects/FLOW/FLOW Overview.png",
+    ],
+  },
+  {
+    id: 6,
+    name: "Movie Page",
+    category: "App",
+    link: "https://github.com/your-username/celestial-portfolio",
+    img: "/projects/MOVIE/MOVIE App.png",
+    gallery: [
+      "/projects/MOVIE/MOVIE App.png",
+      "/projects/MOVIE/MOVIE About.png",
+      
+    ],
+  },
 ];
-
-// `img` is the preview, `gallery` is the collection shown on image hover.
-// `link` is the GitHub repo that opens on click.
-const rawProjects = [
-  { id: 1, name: "Zenith Studio Branding", category: "Branding", link: "https://github.com/your-username/zenith-studio" },
-  { id: 2, name: "Elysian Landing Page", category: "Web", link: "https://github.com/your-username/elysian-landing" },
-  { id: 3, name: "Solstice Poster Series", category: "Poster", link: "https://github.com/your-username/solstice-posters" },
-  { id: 4, name: "Nova Mobile App", category: "App", link: "https://github.com/your-username/nova-app" },
-  { id: 5, name: "Quantum Social Kit", category: "Branding", link: "https://github.com/your-username/quantum-social" },
-  { id: 6, name: "Celestial Portfolio", category: "Web", link: "https://github.com/your-username/celestial-portfolio" },
-  { id: 7, name: "Stellar Event Poster", category: "Poster", link: "https://github.com/your-username/stellar-poster" },
-  { id: 8, name: "Fusion Food Delivery", category: "App", link: "https://github.com/your-username/fusion-food" },
-  { id: 9, name: "Mirage Café Identity", category: "Branding", link: "https://github.com/your-username/mirage-cafe" },
-  { id: 10, name: "Harmonia Music Site", category: "Web", link: "https://github.com/your-username/harmonia-music" },
-];
-
-const projects = rawProjects.map((p, i) => {
-  const gallery = [0, 1, 2, 3].map((n) => pool[(i + n) % pool.length]);
-  return { ...p, img: gallery[0], gallery };
-});
 
 const categories = ["See All", ...new Set(projects.map((p) => p.category))];
+
 const pad = (n, len = 3) => String(n).padStart(len, "0");
 
 function Work() {
   const listRef = useRef(null);
+
   const [filter, setFilter] = useState("See All");
-  const [hovered, setHovered] = useState(null); // project id
-  const [open, setOpen] = useState(false); // gallery open (mouse on the image)
-  const [y, setY] = useState(0); // cursor Y inside the list
+  const [hovered, setHovered] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [y, setY] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const visible =
     filter === "See All"
@@ -51,7 +98,8 @@ function Work() {
   const current = projects.find((p) => p.id === hovered);
 
   const handleMove = (e) => {
-    if (open) return; // freeze the image while the gallery is open
+    if (open || !listRef.current) return;
+
     const rect = listRef.current.getBoundingClientRect();
     setY(e.clientY - rect.top);
   };
@@ -65,27 +113,68 @@ function Work() {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800&display=swap');
-        .work-font { font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif; }
+
+        .work-font {
+          font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif;
+        }
+
         @keyframes rowIn {
-          from { opacity: 0; transform: translateY(14px); }
-          to   { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translateY(14px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
+
         @keyframes numIn {
-          from { opacity: 0; transform: translateY(40%); }
-          to   { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translateY(40%);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
+
         @keyframes galIn {
-          from { opacity: 0; transform: scale(0.92); }
-          to   { opacity: 1; transform: scale(1); }
+          from {
+            opacity: 0;
+            transform: scale(0.92);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
         }
+
         @keyframes dot {
-          0%, 100% { opacity: 1; }
-          50%      { opacity: 0.2; }
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.2;
+          }
         }
-        .row-in { animation: rowIn 0.5s ease-out both; }
-        .num-in { animation: numIn 0.6s ease-out both; }
-        .gal-in { animation: galIn 0.5s ease-out both; }
-        .dot { animation: dot 1.6s ease-in-out infinite; }
+
+        .row-in {
+          animation: rowIn 0.5s ease-out both;
+        }
+
+        .num-in {
+          animation: numIn 0.6s ease-out both;
+        }
+
+        .gal-in {
+          animation: galIn 0.5s ease-out both;
+        }
+
+        .dot {
+          animation: dot 1.6s ease-in-out infinite;
+        }
       `}</style>
 
       <section
@@ -99,6 +188,7 @@ function Work() {
           style={{ borderColor: `${ACCENT}26` }}
         >
           <span>Selected Work ({pad(projects.length, 2)})</span>
+
           <span className="flex items-center gap-2">
             <span className="dot inline-block h-1.5 w-1.5 rounded-full bg-[#140605]" />
             Click any project to visit it on GitHub ↗
@@ -107,9 +197,7 @@ function Work() {
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-[200px_1fr] md:gap-10">
 
-          {/* LEFT: filters + total.
-              Height = screen minus the top bar, so the total number always
-              sits fully inside the screen (it was cut off before). */}
+          {/* LEFT: FILTERS + TOTAL */}
           <aside className="flex flex-col justify-between pt-8 md:sticky md:top-4 md:h-[calc(100dvh-5rem)] md:self-start md:pb-4">
             <ul className="flex flex-row flex-wrap gap-x-4 gap-y-1 text-xs font-semibold md:flex-col md:gap-y-1">
               {categories.map((cat) => (
@@ -117,7 +205,9 @@ function Work() {
                   <button
                     onClick={() => setFilter(cat)}
                     className={`transition-opacity duration-300 ${
-                      filter === cat ? "opacity-100" : "opacity-30 hover:opacity-70"
+                      filter === cat
+                        ? "opacity-100"
+                        : "opacity-30 hover:opacity-70"
                     }`}
                   >
                     {cat}
@@ -127,7 +217,10 @@ function Work() {
             </ul>
 
             <div className="hidden overflow-hidden md:block">
-              <p className="mb-2 text-[11px] font-semibold">Total Work</p>
+              <p className="mb-2 text-[11px] font-semibold">
+                Total Work
+              </p>
+
               <div
                 key={visible.length}
                 className="num-in font-bold leading-[0.8] tracking-[-0.06em]"
@@ -138,14 +231,14 @@ function Work() {
             </div>
           </aside>
 
-          {/* RIGHT: project list */}
+          {/* RIGHT: PROJECT LIST */}
           <div
             ref={listRef}
             className="relative pt-8 pb-16 md:pb-8"
             onMouseMove={handleMove}
             onMouseLeave={handleListLeave}
           >
-            {/* Floating preview. Hover it and it expands into the gallery. */}
+            {/* FLOATING IMAGE PREVIEW */}
             <div
               className="absolute right-[8%] top-0 z-30 hidden md:block"
               onMouseEnter={() => setOpen(true)}
@@ -162,13 +255,15 @@ function Work() {
             >
               <div className="relative h-full w-full overflow-hidden bg-[#e9e4d8] shadow-2xl">
 
-                {/* Closed state: single preview (click opens GitHub) */}
+                {/* CLOSED STATE: PROJECT PREVIEW */}
                 <a
                   href={current?.link}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`absolute inset-0 transition-opacity duration-300 ${
-                    open ? "pointer-events-none opacity-0" : "opacity-100"
+                    open
+                      ? "pointer-events-none opacity-0"
+                      : "opacity-100"
                   }`}
                 >
                   {projects.map((p) => (
@@ -177,22 +272,26 @@ function Work() {
                       src={p.img}
                       alt={p.name}
                       className={`absolute inset-0 h-full w-full object-cover transition-all duration-500 ease-out ${
-                        hovered === p.id ? "scale-100 opacity-100" : "scale-110 opacity-0"
+                        hovered === p.id
+                          ? "scale-100 opacity-100"
+                          : "scale-110 opacity-0"
                       }`}
                     />
                   ))}
+
                   <span className="absolute bottom-2 left-2 bg-[#140605] px-2 py-1 text-[10px] font-semibold uppercase tracking-tight text-[#f8f5ef]">
                     Hover to open collection
                   </span>
                 </a>
 
-                {/* Open state: gallery of the hovered project */}
+                {/* OPEN STATE: PROJECT GALLERY */}
                 {open && current && (
                   <div className="absolute inset-0 flex flex-col gap-3 bg-[#f8f5ef] p-3">
                     <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-tight">
                       <span>
                         No.{pad(current.id)} · {current.name}
                       </span>
+
                       <a
                         href={current.link}
                         target="_blank"
@@ -205,13 +304,18 @@ function Work() {
 
                     <div className="grid min-h-0 flex-1 grid-cols-2 grid-rows-2 gap-2">
                       {current.gallery.map((src, i) => (
-                        <img
+                        <button
                           key={`${current.id}-${i}`}
-                          src={src}
-                          alt={`${current.name} ${i + 1}`}
-                          className="gal-in h-full w-full object-cover"
+                          onClick={() => setSelectedImage(src)}
+                          className="gal-in h-full w-full cursor-zoom-in overflow-hidden"
                           style={{ animationDelay: `${i * 80}ms` }}
-                        />
+                        >
+                          <img
+                            src={src}
+                            alt={`${current.name} ${i + 1}`}
+                            className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                          />
+                        </button>
                       ))}
                     </div>
                   </div>
@@ -219,10 +323,11 @@ function Work() {
               </div>
             </div>
 
-            {/* Rows (key restarts the stagger animation when the filter changes) */}
+            {/* PROJECT ROWS */}
             <div key={filter} className="relative z-10">
               {visible.map((p, i) => {
                 const isHovered = hovered === p.id;
+
                 return (
                   <a
                     key={p.id}
@@ -231,7 +336,9 @@ function Work() {
                     rel="noopener noreferrer"
                     onMouseEnter={() => setHovered(p.id)}
                     className={`row-in grid grid-cols-[70px_1fr_20px] items-center border-b px-2 py-3 text-xs font-semibold transition-colors duration-300 md:grid-cols-[1fr_1fr_20px] md:text-[13px] ${
-                      isHovered ? "bg-[#140605] text-[#f8f5ef]" : ""
+                      isHovered
+                        ? "bg-[#140605] text-[#f8f5ef]"
+                        : ""
                     }`}
                     style={{
                       borderColor: `${ACCENT}26`,
@@ -240,9 +347,12 @@ function Work() {
                   >
                     <span>No.{pad(p.id)}</span>
                     <span>{p.name}</span>
+
                     <span
                       className={`text-right transition-transform duration-300 ${
-                        isHovered ? "-translate-y-0.5 translate-x-0.5" : ""
+                        isHovered
+                          ? "-translate-y-0.5 translate-x-0.5"
+                          : ""
                       }`}
                     >
                       ↗
@@ -254,6 +364,29 @@ function Work() {
           </div>
         </div>
       </section>
+
+      {/* FULLSCREEN IMAGE VIEWER */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#140605]/95 p-4 md:p-10"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            onClick={() => setSelectedImage(null)}
+            className="absolute right-6 top-5 z-10 text-4xl font-light text-[#f8f5ef] transition-opacity hover:opacity-50"
+            aria-label="Close image preview"
+          >
+            ×
+          </button>
+
+          <img
+            src={selectedImage}
+            alt="Full screen project preview"
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[90vh] max-w-[95vw] object-contain shadow-2xl"
+          />
+        </div>
+      )}
     </>
   );
 }

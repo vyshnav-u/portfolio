@@ -46,15 +46,15 @@ const items = [
 const intro = {
     label: "Introduction",
     statement:
-        "I'm Vyshnav, a MERN stack developer who builds clean, fast and thoughtful web experiences, from the first idea to the final deploy.",
+        "Hey, I'm Vyshnav. I'm drawn to exploring new ideas, questioning the familiar, and looking beyond the obvious. I believe creativity is what makes us human — the ability to imagine, explore, and bring something new into existence. It's what drives me to keep learning and growing.",
     blocks: [
         {
             heading: "Focus",
-            text: "I design and develop full-stack web applications, with a strong eye for layout, typography and smooth interaction.",
+            text: "Currently focused on growing as a developer, exploring thoughtful design, and building digital experiences that bring ideas to life. Always learning, experimenting, and pushing myself to create better things.I design and develop full-stack web applications, with a strong eye for layout, typography and smooth interaction.",
         },
         {
             heading: "Approach",
-            text: "I keep things simple: understand the problem, build with modern tools, and polish every detail until it feels right.",
+            text: "I approach every challenge with curiosity and an open mind. I believe in understanding before creating, experimenting before settling, and paying attention to the little details that make a difference. For me, the process matters just as much as the outcome.I keep things simple: understand the problem, build with modern tools, and polish every detail until it feels right.",
         },
     ],
 };
@@ -168,8 +168,8 @@ function About() {
                                     {/* Big title */}
                                     <span
                                         className={`about-title whitespace-nowrap text-[11vw] transition-transform duration-500 ease-out md:text-[min(6.2vw,14vh)] ${isActive
-                                                ? "translate-x-2 md:translate-x-4"
-                                                : "translate-x-0"
+                                            ? "translate-x-2 md:translate-x-4"
+                                            : "translate-x-0"
                                             }`}
                                     >
                                         ({i + 1}) {item.title}
@@ -182,8 +182,8 @@ function About() {
                                             const label = isLink ? line.label : line;
 
                                             const classes = `text-[10px] font-bold uppercase leading-[1.2] tracking-tight transition-all duration-500 ease-out md:text-[12px] ${isActive
-                                                    ? "translate-x-0 opacity-100"
-                                                    : "translate-x-3 opacity-60"
+                                                ? "translate-x-0 opacity-100"
+                                                : "translate-x-3 opacity-60"
                                                 }`;
                                             const delay = {
                                                 transitionDelay: isActive ? `${j * 80}ms` : "0ms",
