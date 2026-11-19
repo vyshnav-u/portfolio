@@ -4,7 +4,7 @@ const images = [
   { src: "/projects/E-FIT/EFIT Home.png", name: "EFIT Home page" },
 
   { src: "/projects/PRODUCT PAGE/PRODUCT Home.png", name: "Landing Page" },
-  { src: "/projects/BOOKSTORE/BOOSTORE Home.png", name: "Mobile App UI" },
+  { src: "/projects/BOOKSTORE/BOOSTORE Home.png", name: "Landing Page" },
   { src: "/projects/RETRO/RETRO Hero.png", name: "RETRO Hero Design" },
   { src: "/projects/BOOKSTORE/BOOKSTORE Footer.png", name: "Book Store Footer" },
   { src: "/projects/RETRO/RETRO About.png", name: "Typography Study" },
@@ -56,7 +56,7 @@ function DesignShowcase() {
 
       {/* Strip */}
       <div
-        className="marquee overflow-hidden bg-[#f8f5ef] py-14"
+        className="marquee overflow-hidden bg-[#f8f5ef] pt-7 md:pt-10"
         onMouseLeave={() => setHovered(null)}
       >
         <div className="marquee-track flex w-max items-end">
@@ -74,8 +74,8 @@ function DesignShowcase() {
                 {/* Label on top (absolute, so it never changes the item width) */}
                 <div
                   className={`pointer-events-none absolute bottom-full left-0 pb-4 whitespace-nowrap text-[10px] tracking-[0.2em] text-[#140605] transition-all duration-500 md:text-sm ${isHovered
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-2 opacity-0"
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-2 opacity-0"
                     }`}
                 >
                   {item.name}
@@ -86,11 +86,11 @@ function DesignShowcase() {
                   src={item.src}
                   alt={item.name}
                   draggable={false}
-                  className={`block h-auto w-full origin-bottom transition-all duration-500 ease-out ${isHovered
-                      ? "scale-110 opacity-100"
-                      : hovered !== null
-                        ? "scale-100 opacity-60"
-                        : "scale-100 opacity-100"
+                  className={`block h-auto w-full origin-bottom border border-10 transition-all duration-500 ease-out ${isHovered
+                    ? "scale-110 border-[#e0301e] opacity-100"
+                    : hovered !== null
+                      ? "scale-100 border-[#140605]/30 opacity-60"
+                      : "scale-100 border-[#140605]/30 opacity-100"
                     }`}
                 />
               </button>

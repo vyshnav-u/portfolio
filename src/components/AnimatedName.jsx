@@ -20,7 +20,7 @@ function AnimatedName() {
   }, []);
 
   return (
-    <h1 className="text-center text-[16vw] font-bold leading-[0.78] tracking-[-0.075em] md:text-[14vw]">
+    <h1 className="text-center text-[18vw] font-bold leading-[0.78] tracking-[-0.075em] md:text-[15vw]">
       <span className="block">{names[currentIndex][0]}</span>
       <span className="block">{names[currentIndex][1]}</span>
     </h1>

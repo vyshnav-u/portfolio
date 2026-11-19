@@ -9,7 +9,7 @@ const links = [
   { label: "GitHub", href: "https://github.com/vyshnav-u" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/vyshnavu-vinay-8b3118424/" },
   { label: "Instagram", href: "https://instagram.com/vysxhn_v" },
-  { label: "Download CV", href: "/cv.pdf", download: true },
+  { label: "Download CV", href: "/vyshnavu fullstack.pdf", download: true },
 ];
 
 function Contact() {

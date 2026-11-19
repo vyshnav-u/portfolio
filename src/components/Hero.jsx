@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Navbar from "./Navbar";
 import AnimatedName from "./AnimatedName";
 import DesignShowcase from "./DesignShowcase";
+import TiltImage from "./TiltImage";
 
 const GRID_SIZE = 56; // px, size of each square
 const GRID_COLOR = "rgba(20, 6, 5, 0.12)"; // grid line color
@@ -103,7 +104,7 @@ function Hero() {
         // so they sit behind all the content but above the beige.
         <section
             ref={sectionRef}
-            className="relative isolate min-h-[80vh] overflow-hidden bg-[#f8f5ef] text-[#140605]"
+            className="relative isolate min-h-[50vh] md:min-h-[80vh] overflow-hidden bg-[#f8f5ef] text-[#140605]"
         >
             <style>{`
                 @keyframes lineDraw {
@@ -164,37 +165,37 @@ function Hero() {
             <Navbar />
 
             {/* Floating top image */}
-            <div className="absolute right-5 top-16 h-16 w-16 overflow-hidden md:right-12 md:top-16 md:h-16 md:w-16">
+            <div className="absolute hidden  w-100 overflow -right-60 md:-right-100 top-16 md:w-200 rotate-[40deg]">
                 <img
-                    src="/images/hero-top.jpg"
+                    src="/spike1.png"
                     alt="Portfolio visual"
-                    className="h-full w-full object-cover grayscale"
+                    className="object-contain"
                 />
             </div>
 
             {/* Main Heading */}
-            <div className="absolute left-1/2 top-[52%] w-full -translate-x-1/2 -translate-y-1/2 px-3">
+            <div className="absolute left-1/2 top-[45%]  md:top-[52%] w-full -translate-x-1/2 -translate-y-1/2 px-3">
 
                 <AnimatedName />
 
-                {/* Blur Glass Effect */}
-                <div className="w-60 absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-1/2 ">
-                    <img src="/id.png" alt="" />
+                {/* Main Image */}
+                <div className="w-25 md:w-55 absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 rotate-[-5deg]">
+                   <TiltImage src="/id.png" backSrc="/id-back.png" alt="Vyshnav ID card" />
                 </div>
 
             </div>
 
             {/* Floating left image */}
-            <div className="absolute bottom-[18%] left-[7%] h-16 w-16 overflow-hidden md:bottom-[18%] md:left-[7%] md:h-16 md:w-16">
+            <div className="absolute hidden w-100 overflow -left-60 bottom-[30%] md:-left-100 md:w-200 rotate-[60deg]">
                 <img
-                    src="/images/hero-left.jpg"
+                    src="/spike1.png"
                     alt="Portrait"
-                    className="h-full w-full object-cover grayscale"
+                    className="object-contain"
                 />
             </div>
 
             {/* Description */}
-            <div className="absolute top-[90%] left-1/2 w-[85%] -translate-x-1/2 text-center md:bottom-[24%] md:w-150">
+            <div className="absolute top-[73%] md:top-[90%] left-1/2 w-[85%] -translate-x-1/2 text-center md:bottom-[24%] md:w-150">
 
 
                 <p className="text-[10px] leading-[1.5] tracking-wide md:text-[11px]">

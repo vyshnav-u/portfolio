@@ -9,7 +9,7 @@ const projects = [
     id: 1,
     name: "BookStore Page",
     category: "Web",
-    link: "https://github.com/your-username/bookstore",
+    link: "https://github.com/vyshnav-u/bookstore-frontend",
     img: "/projects/BOOKSTORE/BOOSTORE Home.png",
     gallery: [
       "/projects/BOOKSTORE/BOOSTORE Home.png",
@@ -20,7 +20,7 @@ const projects = [
     id: 2,
     name: "E-Fit Fitness Training Page",
     category: "Web",
-    link: "https://github.com/your-username/elysian-landing",
+    link: "https://github.com/vyshnav-u/E-FIT-frontend",
     img: "/projects/E-FIT/EFIT Home.png",
     gallery: [
       "/projects/E-FIT/EFIT Home.png",
@@ -32,7 +32,7 @@ const projects = [
     id: 3,
     name: "Retro Casette Page",
     category: "Web",
-    link: "https://github.com/your-username/solstice-posters",
+    link: "https://github.com/vyshnav-u/number-guess",
     img: "/projects/RETRO/RETRO Hero.png",
     gallery: [
       "/projects/RETRO/RETRO Hero.png",
@@ -44,7 +44,7 @@ const projects = [
     id: 4,
     name: "Product Page",
     category: "App",
-    link: "https://github.com/your-username/nova-app",
+    link: "https://github.com/vyshnav-u/stacks-library",
     img: "/projects/PRODUCT PAGE/PRODUCT Home.png",
     gallery: [
       "/projects/PRODUCT PAGE/PRODUCT Home.png",
@@ -56,7 +56,7 @@ const projects = [
     id: 5,
     name: "Flow Landing Page",
     category: "Branding",
-    link: "https://github.com/your-username/quantum-social",
+    link: "",
     img: "/projects/FLOW/FLOW Home.png",
     gallery: [
       "/projects/FLOW/FLOW Home.png",
@@ -67,7 +67,7 @@ const projects = [
     id: 6,
     name: "Movie Page",
     category: "App",
-    link: "https://github.com/your-username/celestial-portfolio",
+    link: "https://github.com/vyshnav-u/movie-app",
     img: "/projects/MOVIE/MOVIE App.png",
     gallery: [
       "/projects/MOVIE/MOVIE App.png",

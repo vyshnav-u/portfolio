@@ -34,10 +34,10 @@ const items = [
     {
         title: "CONNECT",
         details: [
-            { label: "GitHub ↗", href: "https://github.com/your-username" },
-            { label: "LinkedIn ↗", href: "https://linkedin.com/in/your-username" },
-            { label: "Download CV ↓", href: "/cv.pdf", download: true },
-            { label: "your@email.com", href: "mailto:your@email.com" },
+            { label: "GitHub", href: "https://github.com/vyshnav-u" },
+            { label: "LinkedIn", href: "https://www.linkedin.com/in/vyshnavu-vinay-8b3118424/" },
+            { label: "Download CV ↓", href: "/vyshnavu fullstack.pdf", download: true },
+            { label: "vyshnavuvinay@gmail.com", href: "mailto:vyshnavuvinay@gmail.com" },
         ],
     },
 ];
@@ -167,7 +167,7 @@ function About() {
                                 >
                                     {/* Big title */}
                                     <span
-                                        className={`about-title whitespace-nowrap text-[11vw] transition-transform duration-500 ease-out md:text-[min(6.2vw,14vh)] ${isActive
+                                        className={`about-title whitespace-nowrap text-[8vw] transition-transform duration-500 ease-out md:text-[min(6.2vw,14vh)] ${isActive
                                             ? "translate-x-2 md:translate-x-4"
                                             : "translate-x-0"
                                             }`}

@@ -11,9 +11,9 @@ const nav = [
 ];
 
 const socials = [
-  { label: "GitHub", href: "https://github.com/your-username" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/your-username" },
-  { label: "Instagram", href: "https://instagram.com/your-username" },
+  { label: "GitHub", href: "https://github.com/vyshnav-u" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/vyshnavu-vinay-8b3118424/" },
+  { label: "Instagram", href: "https://instagram.com/vyxhn_v" },
 ];
 
 function Footer() {
@@ -89,10 +89,10 @@ function Footer() {
 
         {/* Bottom bar */}
         <div
-          className="flex flex-col gap-1 border-t py-5 text-[11px] font-semibold uppercase tracking-tight md:flex-row md:justify-end"
+          className="flex flex-col items-end gap-1 border-t py-5 text-[11px] font-semibold uppercase tracking-tight md:flex-row md:justify-end"
           style={{ borderColor: `${BG}33` }}
         >
-          <span>© {new Date().getFullYear()} Vyshnav. All rights reserved.</span>
+          <span className="">© {new Date().getFullYear()} Vyshnav. All rights reserved.</span>
           <span className="opacity-60">Designed & built by ysh</span>
         </div>
       </footer>
