@@ -151,7 +151,7 @@ function About() {
                     }}
                 >
                     {/* Full-screen pinned box, list centered so all 5 rows stay visible */}
-                    <div className="sticky top-0 flex h-screen flex-col justify-center">
+                    <div className="sticky top-0 flex py-5 md:pt-10 flex-col justify-center">
                         {items.map((item, i) => {
                             const isActive = i === active;
                             return (
@@ -220,7 +220,7 @@ function About() {
                 {/* ---------- Introduction block ---------- */}
                 <section
                     ref={introRef}
-                    className="grid grid-cols-1 items-center gap-16 px-4 py-10 md:min-h-screen md:grid-cols-[1.25fr_1fr] md:gap-24 md:px-8 md:py-32"
+                    className="grid grid-cols-1 items-center gap-16 px-4 py-2 md:min-h-screen md:grid-cols-[1.25fr_1fr] md:gap-24 md:px-8 md:py-32"
                 >
                     {/* Left: big statement */}
                     <p

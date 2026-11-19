@@ -56,7 +56,7 @@ function DesignShowcase() {
 
       {/* Strip */}
       <div
-        className="marquee overflow-hidden bg-[#f8f5ef] pt-7 md:pt-10"
+        className="marquee overflow bg-[#f8f5ef] md:pt-10"
         onMouseLeave={() => setHovered(null)}
       >
         <div className="marquee-track flex w-max items-end">

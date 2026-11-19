@@ -179,7 +179,7 @@ function Work() {
 
       <section
         id="work"
-        className="work-font min-h-screen px-4 md:px-8"
+        className="work-font  px-4 md:px-8"
         style={{ backgroundColor: BG, color: ACCENT }}
       >
         {/* TOP INFO BAR */}
