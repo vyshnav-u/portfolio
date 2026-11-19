@@ -104,7 +104,7 @@ function Hero() {
         // so they sit behind all the content but above the beige.
         <section
             ref={sectionRef}
-            className="relative isolate min-h-[60vh] md:min-h-[80vh] overflow-hidden bg-[#f8f5ef] text-[#140605]"
+            className="relative isolate min-h-[55vh] md:min-h-[80vh] overflow-hidden bg-[#f8f5ef] text-[#140605]"
         >
             <style>{`
                 @keyframes lineDraw {
