@@ -6,7 +6,7 @@ function Navbar() {
             {/* Navigation */}
             <nav className="absolute top-0 left-0 z-20 flex w-full items-center justify-between px-5 py-5 md:px-8">
 
-                <a href="#" className="font-bold text-3xl tracking-iwde">
+                <a href="#" className="font-bold text-md md:text-3xl tracking-iwde">
                     ysh.
                 </a>
 
@@ -16,7 +16,7 @@ function Navbar() {
                     <a href="#about" className="hover:opacity-50">About</a>
                 </div>
 
-                <a href="#contact" className="font-bold text-lg hover:opacity-50">
+                <a href="#contact" className="font-bold text-sm md:text-lg hover:opacity-50">
                     Contact ↓
                 </a>
             </nav>

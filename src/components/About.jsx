@@ -59,9 +59,13 @@ const intro = {
     ],
 };
 
-const STEP_VH = 60; // scroll length per step
+const STEP_VH = 60; // scroll length per step (desktop only)
 const BG = "#f8f5ef";
 const ACCENT = "#140605";
+
+// Everything animated below is desktop-only (md = 768px and up).
+// On phones the rows are a plain static list with all details visible.
+const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
 
 function About() {
     const sectionRef = useRef(null);
@@ -71,6 +75,8 @@ function About() {
 
     useEffect(() => {
         const onScroll = () => {
+            // no scroll-driven animation on small screens
+            if (isMobile()) return;
             const el = sectionRef.current;
             if (!el) return;
             const rect = el.getBoundingClientRect();
@@ -105,6 +111,7 @@ function About() {
     }, []);
 
     const goTo = (index) => {
+        if (isMobile()) return; // rows are static on phones, nothing to jump to
         const el = sectionRef.current;
         if (!el) return;
         const sectionTop = el.getBoundingClientRect().top + window.scrollY;
@@ -118,9 +125,10 @@ function About() {
     const reveal = (delay = 0) => ({
         transitionDelay: introVisible ? `${delay}ms` : "0ms",
     });
+    // on phones the intro is always visible; the fade/slide-in is md and up only
     const revealClass = introVisible
         ? "translate-y-0 opacity-100"
-        : "translate-y-8 opacity-0";
+        : "md:translate-y-8 md:opacity-0";
 
     return (
         <>
@@ -134,24 +142,20 @@ function About() {
           letter-spacing: -0.055em;
           line-height: 0.85;
         }
+        /* phones: normal flowing section. md and up: tall section that pins while you scroll */
+        .about-pin { height: auto; }
+        @media (min-width: 768px) {
+          .about-pin { height: ${items.length * STEP_VH + 100}vh; }
+        }
       `}</style>
 
             <div
                 className="about-font"
                 style={{ backgroundColor: BG, color: ACCENT }}
             >
-                {/* ---------- Pinned scroll rows ---------- */}
-                <section
-                    id="about"
-                    ref={sectionRef}
-                    className="relative"
-                    style={{
-                        // one full pinned screen + STEP_VH of scrolling per row
-                        height: `${items.length * STEP_VH + 100}vh`,
-                    }}
-                >
-                    {/* Full-screen pinned box, list centered so all 5 rows stay visible */}
-                    <div className="sticky top-0 flex py-5 md:pt-10 flex-col justify-center">
+                {/* ---------- Scroll rows (pinned + animated on desktop, static on phones) ---------- */}
+                <section id="about" ref={sectionRef} className="about-pin relative">
+                    <div className="flex flex-col justify-center py-5 md:sticky md:top-0 md:pt-10">
                         {items.map((item, i) => {
                             const isActive = i === active;
                             return (
@@ -161,16 +165,18 @@ function About() {
                                     tabIndex={0}
                                     onClick={() => goTo(i)}
                                     onKeyDown={(e) => e.key === "Enter" && goTo(i)}
-                                    className={`flex w-full cursor-pointer flex-col gap-2 border-b px-4 pb-3 pt-4 text-left transition-all duration-500 ease-out first:border-t md:flex-row md:items-end md:justify-between md:gap-8 md:px-8 md:pb-4 md:pt-5 ${isActive ? "opacity-100" : "opacity-40 hover:opacity-70"
-                                        }`}
+                                    className={`flex w-full flex-col gap-2 border-b px-4 pb-3 pt-4 text-left first:border-t md:cursor-pointer md:flex-row md:items-end md:justify-between md:gap-8 md:px-8 md:pb-4 md:pt-5 md:transition-all md:duration-500 md:ease-out ${
+                                        isActive
+                                            ? "opacity-100"
+                                            : "opacity-100 md:opacity-40 md:hover:opacity-70"
+                                    }`}
                                     style={{ borderColor: ACCENT }}
                                 >
                                     {/* Big title */}
                                     <span
-                                        className={`about-title whitespace-nowrap text-[8vw] transition-transform duration-500 ease-out md:text-[min(6.2vw,14vh)] ${isActive
-                                            ? "translate-x-2 md:translate-x-4"
-                                            : "translate-x-0"
-                                            }`}
+                                        className={`about-title whitespace-nowrap text-[8vw] md:text-[min(6.2vw,14vh)] md:transition-transform md:duration-500 md:ease-out ${
+                                            isActive ? "md:translate-x-4" : "md:translate-x-0"
+                                        }`}
                                     >
                                         ({i + 1}) {item.title}
                                     </span>
@@ -181,10 +187,11 @@ function About() {
                                             const isLink = typeof line === "object";
                                             const label = isLink ? line.label : line;
 
-                                            const classes = `text-[10px] font-bold uppercase leading-[1.2] tracking-tight transition-all duration-500 ease-out md:text-[12px] ${isActive
-                                                ? "translate-x-0 opacity-100"
-                                                : "translate-x-3 opacity-60"
-                                                }`;
+                                            const classes = `text-[10px] font-bold uppercase leading-[1.2] tracking-tight md:text-[12px] md:transition-all md:duration-500 md:ease-out ${
+                                                isActive
+                                                    ? "md:translate-x-0 md:opacity-100"
+                                                    : "md:translate-x-3 md:opacity-60"
+                                            }`;
                                             const delay = {
                                                 transitionDelay: isActive ? `${j * 80}ms` : "0ms",
                                             };
@@ -199,7 +206,7 @@ function About() {
                                                     rel="noopener noreferrer"
                                                     download={line.download ? true : undefined}
                                                     onClick={(e) => e.stopPropagation()}
-                                                    className={`${classes} underline-offset-2 hover:underline`}
+                                                    className={`${classes} py-0.5 underline-offset-2 hover:underline`}
                                                     style={delay}
                                                 >
                                                     {label}
@@ -220,11 +227,11 @@ function About() {
                 {/* ---------- Introduction block ---------- */}
                 <section
                     ref={introRef}
-                    className="grid grid-cols-1 items-center gap-16 px-4 py-2 md:min-h-screen md:grid-cols-[1.25fr_1fr] md:gap-24 md:px-8 md:py-32"
+                    className="grid grid-cols-1 items-center gap-16 px-4 py-10 md:min-h-screen md:grid-cols-[1.25fr_1fr] md:gap-24 md:px-8 md:py-32"
                 >
                     {/* Left: big statement */}
                     <p
-                        className={`max-w-[18em] text-[7vw] font-medium leading-[1.15] tracking-[-0.02em] transition-all duration-1000 ease-out md:text-[2.9vw] ${revealClass}`}
+                        className={`max-w-[18em] text-[7vw] font-medium leading-[1.15] tracking-[-0.02em] md:text-[2.9vw] md:transition-all md:duration-1000 md:ease-out ${revealClass}`}
                         style={reveal(0)}
                     >
                         {intro.statement}
@@ -234,7 +241,7 @@ function About() {
                     <div className="flex flex-col gap-14 md:gap-20">
                         {/* Label with simple brackets */}
                         <div
-                            className={`flex justify-center transition-all duration-1000 ease-out md:justify-start md:pl-6 ${revealClass}`}
+                            className={`flex justify-center md:justify-start md:pl-6 md:transition-all md:duration-1000 md:ease-out ${revealClass}`}
                             style={reveal(150)}
                         >
                             <span className="text-sm font-semibold tracking-tight md:text-base">
@@ -247,7 +254,7 @@ function About() {
                             {intro.blocks.map((block, i) => (
                                 <div
                                     key={block.heading}
-                                    className={`transition-all duration-1000 ease-out ${revealClass}`}
+                                    className={`md:transition-all md:duration-1000 md:ease-out ${revealClass}`}
                                     style={reveal(300 + i * 150)}
                                 >
                                     <h4 className="mb-3 text-[12px] font-bold tracking-tight">

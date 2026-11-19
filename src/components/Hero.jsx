@@ -104,7 +104,7 @@ function Hero() {
         // so they sit behind all the content but above the beige.
         <section
             ref={sectionRef}
-            className="relative isolate min-h-[45vh] md:min-h-[80vh] overflow-hidden bg-[#f8f5ef] text-[#140605]"
+            className="relative isolate min-h-[60vh] md:min-h-[80vh] overflow-hidden bg-[#f8f5ef] text-[#140605]"
         >
             <style>{`
                 @keyframes lineDraw {
@@ -174,12 +174,12 @@ function Hero() {
             </div>
 
             {/* Main Heading */}
-            <div className="absolute left-1/2 top-[45%] z-100 md:top-[52%] w-full -translate-x-1/2 -translate-y-1/2 px-3">
+            <div className="absolute left-1/2 top-35 z-100 md:top-[45%] w-full -translate-x-1/2 -translate-y-1/2 px-3">
 
                 <AnimatedName />
 
                 {/* Main Image */}
-                <div className="w-30 md:w-55 absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 rotate-[-5deg]">
+                <div className="w-35 md:w-57 overflow absolute left-1/2 top-35 md:top-[75%] -translate-x-1/2 -translate-y-1/2 rotate-[-5deg]">
                    <TiltImage src="/id.png" backSrc="/id-back.png" alt="Vyshnav ID card" />
                 </div>
 
@@ -195,7 +195,7 @@ function Hero() {
             </div>
 
             {/* Description */}
-            <div className="absolute top-[73%] md:top-[90%] left-1/2 w-[85%] -translate-x-1/2 text-center md:bottom-[24%] md:w-150">
+            <div className="absolute top-80 md:top-[90%] left-1/2 w-[85%] -translate-x-1/2 text-center md:bottom-[24%] md:w-150">
 
 
                 <p className="text-[8px] leading-[1.5] tracking-wide md:text-[11px]">
