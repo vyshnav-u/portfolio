@@ -5,7 +5,14 @@ const MAX_TIME = 8000; // ms, give up waiting (slow network / broken image) and 
 const EXIT_TIME = 900; // ms, curtain lift animation
 const BG = "#f8f5ef";
 const INK = "#140605";
-const RED = "#e0301e";
+
+const WORD = "LOADING";
+const GLYPHS = "01ABCDEF#$%&@!<>/\\+=*?";
+const SCRAMBLE_TICK = 45; // ms between letter changes (lower = faster flicker)
+const RESOLVE_STEP = 2; // ticks each letter takes to lock in (higher = slower decode)
+const HOLD_TICKS = 14; // ticks the finished word stays before it scrambles again
+
+const randChar = () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
 
 // Loads (and decodes) one image. Always resolves, even on error, so one broken file can't hang the page.
 const preload = (src) =>
@@ -26,7 +33,26 @@ const preload = (src) =>
 function Loader({ images = [], prefetch = [], onReveal, onDone }) {
     const [progress, setProgress] = useState(0); // 0-100, what is shown
     const [leaving, setLeaving] = useState(false);
+    const [text, setText] = useState(WORD);
     const shownRef = useRef(0);
+
+    // Hacker-style decoding text: letters flicker, then lock in left to right, then repeat
+    useEffect(() => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        const cycle = WORD.length * RESOLVE_STEP + HOLD_TICKS;
+        let tick = 0;
+        const id = setInterval(() => {
+            const locked = Math.floor(tick / RESOLVE_STEP);
+            let out = "";
+            for (let i = 0; i < WORD.length; i++) {
+                out += i < locked ? WORD[i] : randChar();
+            }
+            setText(out);
+            tick = (tick + 1) % cycle;
+        }, SCRAMBLE_TICK);
+        return () => clearInterval(id);
+    }, []);
 
     useEffect(() => {
         const prevOverflow = document.body.style.overflow;
@@ -101,7 +127,7 @@ function Loader({ images = [], prefetch = [], onReveal, onDone }) {
             role="status"
             aria-live="polite"
             aria-label={`Loading ${progress}%`}
-            className="loader-font fixed inset-0 z-[200] flex flex-col justify-between overflow-hidden"
+            className="loader-font fixed inset-0 z-[200] overflow-hidden"
             style={{
                 backgroundColor: BG,
                 color: INK,
@@ -110,73 +136,28 @@ function Loader({ images = [], prefetch = [], onReveal, onDone }) {
             }}
         >
             <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;700&display=swap');
-                .loader-font { font-family: 'Inter Tight', 'Helvetica Neue', Arial, sans-serif; }
+                .loader-font {
+                    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+                }
             `}</style>
 
-            {/* same grid as the hero, so the handoff feels continuous */}
-            <div
+            {/* percentage, small, top right */}
+            <span
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0"
-                style={{
-                    backgroundImage: `
-                        linear-gradient(to right, rgba(20,6,5,0.12) 1px, transparent 1px),
-                        linear-gradient(to bottom, rgba(20,6,5,0.12) 1px, transparent 1px)
-                    `,
-                    backgroundSize: "56px 56px",
-                    WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 25%, transparent 100%)",
-                    maskImage: "linear-gradient(to bottom, black 0%, black 25%, transparent 100%)",
-                }}
-            />
-
-            {/* top row */}
-            <div className="relative flex items-start justify-between px-4 pt-5 text-[10px] font-bold uppercase tracking-tight md:px-8 md:pt-8 md:text-[12px]">
-                <span>Vyshnav</span>
-                <span>Portfolio — Loading</span>
-            </div>
-
-            {/* scribble that draws itself as the progress goes up */}
-            <svg
-                aria-hidden="true"
-                viewBox="0 0 1000 200"
-                preserveAspectRatio="none"
-                className="pointer-events-none absolute left-0 right-0 top-1/2 h-[28vh] w-full -translate-y-1/2"
+                className="absolute right-4 top-4 text-[13px] font-bold tabular-nums tracking-tight md:right-8 md:top-6 md:text-[16px]"
             >
-                <path
-                    d="M -20 120 C 80 20, 140 190, 240 110 S 380 30, 470 120 S 600 200, 700 90 S 860 20, 1020 100"
-                    pathLength="1"
-                    fill="none"
-                    stroke={RED}
-                    strokeOpacity="0.85"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    vectorEffect="non-scaling-stroke"
-                    style={{
-                        strokeDasharray: 1,
-                        strokeDashoffset: 1 - progress / 100,
-                    }}
-                />
-            </svg>
+                {String(progress).padStart(3, "0")}%
+            </span>
 
-            {/* bottom row: big counter */}
-            <div className="relative flex items-end justify-between px-4 pb-3 md:px-8 md:pb-5">
+            {/* scrambling word, small, centered */}
+            <div className="absolute inset-0 flex items-center justify-center">
                 <span
-                    className="font-bold leading-[0.8] tracking-[-0.06em] tabular-nums"
-                    style={{ fontSize: "min(28vw, 42vh)" }}
+                    aria-hidden="true"
+                    className="text-[11px] font-bold uppercase tracking-[0.35em] md:text-[23px]"
+                    style={{ minWidth: "9ch", textAlign: "center" }}
                 >
-                    {String(progress).padStart(3, "0")}
+                    {text}
                 </span>
-                <span className="mb-2 max-w-[9rem] text-right text-[10px] font-bold uppercase leading-[1.3] tracking-tight md:mb-4 md:text-[12px]">
-                    Getting things ready
-                </span>
-            </div>
-
-            {/* thin progress bar along the very bottom */}
-            <div className="relative h-[3px] w-full" style={{ backgroundColor: "rgba(20,6,5,0.12)" }}>
-                <div
-                    className="h-full"
-                    style={{ width: `${progress}%`, backgroundColor: RED }}
-                />
             </div>
         </div>
     );

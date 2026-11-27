@@ -5,16 +5,18 @@ import DesignShowcase from '../components/DesignShowcase'
 import Work from '../components/Work'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
+import ScribbleBackground from '../components/ScribbleBackground'
 
 function Home() {
   return (
     <div>
-      <Hero/>
-      <DesignShowcase/>
-      <About/>
-      <Work/>
-      <Contact/>
-      <Footer/>
+      <ScribbleBackground>
+        <Hero />
+        <About />
+      </ScribbleBackground>
+      <Work />
+      <Contact />
+      <Footer />
     </div>
   )
 }
