@@ -109,7 +109,7 @@ const items = [
         icon: FiSend,
         details: ["Open to work and collaboration", "Say hello below"],
         about:
-            "Looking for opportunities to build and learn. Reach out about internships, projects or just to talk about web development.",
+            "Aspiring web developer looking for opportunities to learn, collaborate, and grow. Open to internships, projects, and connecting with fellow developers.",
         tags: [
             { label: "GitHub", href: "https://github.com/vyshnav-u", icon: FaGithub },
             {
